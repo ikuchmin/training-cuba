@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.training.web.customer.CustomerBrowse"
+        focusComponent="customersTable"
+        lookupComponent="customersTable"
+        messagesPack="com.company.training.web.customer">
+    <dsContext>
+        <collectionDatasource id="customersDs"
+                              class="com.company.training.entity.Customer"
+                              view="_local">
+            <query>
+                <![CDATA[select e from training$Customer e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="customersTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="customersTable"
+                datasource="customersDs">
+            <properties include=".*"/>
+        </filter>
+        <table id="customersTable"
+               width="100%">
+            <columns>
+                <column id="name"/>
+                <column id="phone"/>
+                <column id="email"/>
+            </columns>
+            <rows datasource="customersDs"/>
+            <rowsCount/>
+        </table>
+    </layout>
+</window>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.training.web.repair.RepairBrowse"
+        focusComponent="repairsTable"
+        lookupComponent="repairsTable"
+        messagesPack="com.company.training.web.repair">
+    <dsContext>
+        <collectionDatasource id="repairsDs"
+                              class="com.company.training.entity.Repair"
+                              view="_local">
+            <query>
+                <![CDATA[select e from training$Repair e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="repairsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="repairsTable"
+                datasource="repairsDs">
+            <properties include=".*"/>
+        </filter>
+        <table id="repairsTable"
+               width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+            </actions>
+            <columns>
+                <column id="description"/>
+            </columns>
+            <rows datasource="repairsDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="repairsTable.create"/>
+                <button id="editBtn"
+                        action="repairsTable.edit"/>
+                <button id="removeBtn"
+                        action="repairsTable.remove"/>
+            </buttonsPanel>
+        </table>
+    </layout>
+</window>

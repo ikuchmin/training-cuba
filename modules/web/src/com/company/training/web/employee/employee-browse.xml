@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://browseCaption"
+        class="com.company.training.web.employee.EmployeeBrowse"
+        focusComponent="employeesTable"
+        lookupComponent="employeesTable"
+        messagesPack="com.company.training.web.employee">
+    <dsContext>
+        <collectionDatasource id="employeesDs"
+                              class="com.company.training.entity.Employee"
+                              view="employeeWithCenter">
+            <query>
+                <![CDATA[select e from training$Employee e]]>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="employeesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="employeesTable"
+                datasource="employeesDs">
+            <properties include=".*"/>
+        </filter>
+        <table id="employeesTable"
+               width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove"/>
+                <action id="refresh"/>
+            </actions>
+            <columns>
+                <column id="firstName"/>
+                <column id="lastName"/>
+                <column id="birthDate"/>
+                <column id="email"/>
+                <column id="salary"/>
+                <column id="center"/>
+            </columns>
+            <rows datasource="employeesDs"/>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn"
+                        action="employeesTable.create"/>
+                <button id="editBtn"
+                        action="employeesTable.edit"/>
+                <button id="removeBtn"
+                        action="employeesTable.remove"/>
+                <button id="refreshBtn"
+                        action="employeesTable.refresh"/>
+            </buttonsPanel>
+        </table>
+    </layout>
+</window>

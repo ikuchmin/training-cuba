@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editCaption"
+        class="com.company.training.web.carservicecenter.CarServiceCenterEdit"
+        datasource="carServiceCenterDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.training.web.carservicecenter">
+    <dsContext>
+        <datasource id="carServiceCenterDs"
+                    class="com.company.training.entity.CarServiceCenter"
+                    view="carServiceCenterWithDependencies">
+            <collectionDatasource id="repairsDs"
+                                  property="repairs"/>
+            <collectionDatasource id="customersDs"
+                                  property="customers"/>
+            <collectionDatasource id="employeesDs"
+                                  property="employees"/>
+        </datasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <tabSheet id="carServiceSheet">
+            <tab caption="Commons"
+                 margin="true,false,false,false"
+                 spacing="true">
+                <fieldGroup id="fieldGroup"
+                            datasource="carServiceCenterDs">
+                    <column width="250px">
+                        <field id="name"/>
+                        <field id="phone"/>
+                        <field id="city"/>
+                        <field id="address"/>
+                    </column>
+                </fieldGroup>
+                <groupBox id="repairsBox"
+                          caption="msg://com.company.training.entity/CarServiceCenter.repairs">
+                    <table id="repairsTable"
+                           height="200px"
+                           width="100%">
+                        <actions>
+                            <action id="create"/>
+                            <action id="edit"/>
+                            <action id="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="employee"/>
+                            <column id="customer"/>
+                            <column id="center"/>
+                        </columns>
+                        <rows datasource="repairsDs"/>
+                        <buttonsPanel>
+                            <button action="repairsTable.create"/>
+                            <button action="repairsTable.edit"/>
+                            <button action="repairsTable.remove"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+                <groupBox id="employeesBox"
+                          caption="msg://com.company.training.entity/CarServiceCenter.employees">
+                    <table id="employeesTable"
+                           height="200px"
+                           width="100%">
+                        <actions>
+                            <action id="create"/>
+                            <action id="edit"/>
+                            <action id="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="firstName"/>
+                            <column id="lastName"/>
+                        </columns>
+                        <rows datasource="employeesDs"/>
+                        <buttonsPanel>
+                            <button action="employeesTable.create"/>
+                            <button action="employeesTable.edit"/>
+                            <button action="employeesTable.remove"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+            </tab>
+            <tab id="customersTab"
+                 caption="Customers"
+                 margin="true,false,false,false"
+                 spacing="true">
+                <groupBox id="customersBox"
+                          caption="msg://com.company.training.entity/CarServiceCenter.customers">
+                    <table id="customersTable"
+                           height="200px"
+                           width="100%">
+                        <actions>
+                            <action id="add"/>
+                            <action id="remove"/>
+                        </actions>
+                        <columns>
+                            <column id="name"
+                                    caption="msg://city"/>
+                            <column id="email"
+                                    caption="msg://email"/>
+                            <column id="type"
+                                    caption="msg://type"/>
+                        </columns>
+                        <rows datasource="customersDs"/>
+                        <buttonsPanel>
+                            <button action="customersTable.add"/>
+                            <button action="customersTable.remove"/>
+                        </buttonsPanel>
+                    </table>
+                </groupBox>
+            </tab>
+        </tabSheet>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

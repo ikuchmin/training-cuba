@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
+    <menu id="application"
+          insertBefore="administration">
+        <item id="training$City.browse"/>
+        <item id="training$Individual.browse"/>
+        <item id="training$Company.browse"/>
+        <item id="training$CarServiceCenter.browse"/>
+        <item id="training$Employee.browse"/>
+        <item id="training$Customer.browse"/>
+        <item id="training$Repair.browse"/>
+    </menu>
+</menu-config>

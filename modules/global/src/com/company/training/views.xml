@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
+    <view class="com.company.training.entity.CarServiceCenter"
+          extends="_local"
+          name="carServiceCenterWithDependencies">
+        <property name="city"
+                  view="_minimal"/>
+        <property name="customers"
+                  view="_minimal"/>
+        <property name="employees"
+                  view="_minimal"/>
+        <property name="repairs"
+                  view="_minimal"/>
+    </view>
+    <view class="com.company.training.entity.Employee"
+          extends="_local"
+          name="employeeWithCenter">
+        <property name="center"
+                  view="_minimal">
+            <property name="city">
+                <property name="name"/>
+            </property>
+        </property>
+    </view>
+    <view class="com.company.training.entity.Repair"
+          extends="_local"
+          name="repair-view-create">
+        <property name="employee"
+                  view="_minimal"/>
+        <property name="customer"
+                  view="_minimal"/>
+        <property name="center"
+                  view="_minimal">
+            <property name="city">
+                <property name="name"/>
+            </property>
+        </property>
+    </view>
+    <view class="com.company.training.entity.Employee"
+          name="employee-birthday">
+        <property name="firstName"/>
+        <property name="birthDate"/>
+        <property name="email"/>
+    </view>
+    <view class="com.company.training.entity.Individual"
+          extends="_local"
+          name="individual-service">
+        <property name="services"
+                  view="_minimal"/>
+    </view>
+    <view class="com.company.training.entity.Company"
+          extends="_local"
+          name="company-service">
+        <property name="services"
+                  view="_minimal"/>
+    </view>
+</views>

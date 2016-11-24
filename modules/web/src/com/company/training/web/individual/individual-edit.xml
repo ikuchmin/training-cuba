@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editCaption"
+        class="com.company.training.web.individual.IndividualEdit"
+        datasource="individualDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.training.web.individual">
+    <dsContext>
+        <datasource id="individualDs"
+                    class="com.company.training.entity.Individual"
+                    view="individual-service">
+            <collectionDatasource id="servicesDs"
+                                  property="services"/>
+        </datasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="individualDs">
+            <column width="250px">
+                <field id="name"/>
+                <field id="phone"/>
+                <field id="email"/>
+                <field id="passportNo"/>
+            </column>
+        </fieldGroup>
+        <groupBox id="servicesBox"
+                  caption="msg://com.company.training.entity/Customer.services">
+            <table id="servicesTable"
+                   height="200px"
+                   width="100%">
+                <actions>
+                    <action id="add"/>
+                    <action id="remove"/>
+                </actions>
+                <columns>
+                    <column id="name"/>
+                    <column id="city"/>
+                </columns>
+                <rows datasource="servicesDs"/>
+                <buttonsPanel>
+                    <button action="servicesTable.add"/>
+                    <button action="servicesTable.remove"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

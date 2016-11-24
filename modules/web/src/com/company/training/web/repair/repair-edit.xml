@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        caption="msg://editCaption"
+        class="com.company.training.web.repair.RepairEdit"
+        datasource="repairDs"
+        focusComponent="fieldGroup"
+        messagesPack="com.company.training.web.repair">
+    <dsContext>
+        <datasource id="repairDs"
+                    class="com.company.training.entity.Repair"
+                    view="repair-view-create"/>
+        <collectionDatasource id="employeesDs"
+                              class="com.company.training.entity.Employee"
+                              view="employeeWithCenter">
+            <query>
+                <![CDATA[select e from training$Employee e                
+            ]]>
+                <filter>
+                    <and>
+                        <c>e.center.id = :ds$repairDs.center</c>
+                    </and>
+                </filter>
+            </query>
+        </collectionDatasource>
+    </dsContext>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="windowActions"
+            spacing="true">
+        <fieldGroup id="fieldGroup"
+                    datasource="repairDs">
+            <column width="250px">
+                <field id="description"
+                       rows="5"/>
+                <field id="customer"/>
+                <field id="center"/>
+            </column>
+        </fieldGroup>
+        <hbox spacing="true">
+            <label height="30px"
+                   value="msg://employee"/>
+            <lookupField id="employeeLookup"
+                         datasource="repairDs"
+                         optionsDatasource="employeesDs"
+                         property="employee"/>
+        </hbox>
+        <frame id="windowActions"
+               screen="editWindowActions"/>
+    </layout>
+</window>

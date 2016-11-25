@@ -17,7 +17,7 @@
             ]]>
                 <filter>
                     <and>
-                        <c>e.center.id = :ds$repairDs.center</c>
+                        <c>e.center.id = :component$fieldGroup.center</c>
                     </and>
                 </filter>
             </query>

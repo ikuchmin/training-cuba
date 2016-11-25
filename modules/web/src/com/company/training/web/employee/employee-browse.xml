@@ -8,7 +8,8 @@
     <dsContext>
         <collectionDatasource id="employeesDs"
                               class="com.company.training.entity.Employee"
-                              view="employeeWithCenter">
+                              view="employeeWithCenter"
+                              softDeletion="false">
             <query>
                 <![CDATA[select e from training$Employee e]]>
             </query>

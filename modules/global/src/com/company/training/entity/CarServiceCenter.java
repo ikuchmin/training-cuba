@@ -16,6 +16,7 @@ import com.haulmont.chile.core.annotations.Composition;
 import com.haulmont.cuba.core.entity.annotation.OnDelete;
 import com.haulmont.cuba.core.entity.annotation.OnDeleteInverse;
 import com.haulmont.cuba.core.global.DeletePolicy;
+import com.haulmont.cuba.security.entity.User;
 
 @NamePattern("%s - %s|name,city")
 @Table(name = "TRAINING_CAR_SERVICE_CENTER")
@@ -50,6 +51,21 @@ public class CarServiceCenter extends StandardEntity {
     @Composition
     @OneToMany(mappedBy = "center")
     protected Set<Repair> repairs;
+
+    @OnDeleteInverse(DeletePolicy.DENY)
+    @OnDelete(DeletePolicy.UNLINK)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "OWNER_ID")
+    protected User owner;
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
 
     public void setRepairs(Set<Repair> repairs) {
         this.repairs = repairs;

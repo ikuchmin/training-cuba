@@ -31,6 +31,7 @@ create table TRAINING_CAR_SERVICE_CENTER (
     PHONE varchar(20),
     CITY_ID varchar(36) not null,
     ADDRESS varchar(255),
+    OWNER_ID varchar(36) not null,
     --
     primary key (ID)
 )^

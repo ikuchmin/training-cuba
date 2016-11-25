@@ -32,6 +32,7 @@
                         <field id="phone"/>
                         <field id="city"/>
                         <field id="address"/>
+                        <field id="owner"/>
                     </column>
                 </fieldGroup>
                 <groupBox id="repairsBox"
@@ -92,6 +93,7 @@
                         <actions>
                             <action id="add"/>
                             <action id="remove"/>
+                            <action id="edit"/>
                         </actions>
                         <columns>
                             <column id="name"
@@ -105,6 +107,8 @@
                         <buttonsPanel>
                             <button action="customersTable.add"/>
                             <button action="customersTable.remove"/>
+                            <button id="edit"
+                                    action="customersTable.edit"/>
                         </buttonsPanel>
                     </table>
                 </groupBox>

@@ -11,6 +11,8 @@
                   view="_minimal"/>
         <property name="repairs"
                   view="_minimal"/>
+        <property name="owner"
+                  view="_minimal"/>
     </view>
     <view class="com.company.training.entity.Employee"
           extends="_local"

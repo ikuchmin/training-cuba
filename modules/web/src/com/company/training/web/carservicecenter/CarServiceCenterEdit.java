@@ -6,15 +6,24 @@ import com.company.training.entity.Customer;
 import com.company.training.entity.Individual;
 import com.company.training.service.CityService;
 import com.haulmont.bali.util.ParamsMap;
+import com.haulmont.chile.core.model.MetaClass;
+import com.haulmont.chile.core.model.Session;
+import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.global.Security;
 import com.haulmont.cuba.gui.components.AbstractEditor;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.components.FieldGroup;
 import com.haulmont.cuba.gui.components.TabSheet;
 import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.components.actions.AddAction;
 import com.haulmont.cuba.gui.components.actions.CreateAction;
 import com.haulmont.cuba.gui.components.actions.EditAction;
+import com.haulmont.cuba.gui.components.actions.RemoveAction;
 import com.haulmont.cuba.gui.data.CollectionDatasource;
 import com.haulmont.cuba.gui.xml.layout.ComponentsFactory;
+import com.haulmont.cuba.security.entity.EntityAttrAccess;
+import com.haulmont.cuba.security.entity.EntityOp;
+import com.haulmont.cuba.security.global.UserSession;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -31,11 +40,23 @@ public class CarServiceCenterEdit extends AbstractEditor<CarServiceCenter> {
     @Named("employeesTable.edit")
     private EditAction employeesTableEdit;
 
+    @Named("employeesTable.remove")
+    private RemoveAction employeesTableRemove;
+
     @Named("repairsTable.create")
     private CreateAction repairsTableCreate;
 
     @Named("repairsTable.edit")
     private EditAction repairsTableEdit;
+
+    @Named("repairsTable.remove")
+    private RemoveAction repairsTableRemove;
+
+    @Named("customersTable.add")
+    private AddAction customersTableAdd;
+
+    @Named("customersTable.remove")
+    private RemoveAction customersTableRemove;
 
     @Inject
     private CollectionDatasource<Customer, UUID> customersDs;
@@ -55,6 +76,15 @@ public class CarServiceCenterEdit extends AbstractEditor<CarServiceCenter> {
     @Inject
     private ComponentsFactory componentsFactory;
 
+    @Inject
+    private Security security;
+
+    @Inject
+    private Metadata metadata;
+
+    @Inject
+    private UserSession userSession;
+
     @Override
     public void init(Map<String, Object> params) {
         employeesTableCreate.setWindowParams(WINDOW_PARAM);
@@ -63,6 +93,13 @@ public class CarServiceCenterEdit extends AbstractEditor<CarServiceCenter> {
         repairsTableEdit.setWindowParams(WINDOW_PARAM);
 
         customersDs.addCollectionChangeListener(event -> updateSizeOfCustomersInTabCaption());
+        fieldGroup.getFieldComponent("owner").setEnabled(false);
+
+        Session session = metadata.getSession();
+        MetaClass metaCarServiceCenter = session.getClassNN(CarServiceCenter.class);
+        checkPermissionsOnActionsRepairsTable(metaCarServiceCenter);
+        checkPermissionsOnActionsCustomersTable(metaCarServiceCenter);
+        checkPermissionsOnActionsEmployeesTable(metaCarServiceCenter);
     }
 
     @Override
@@ -70,6 +107,36 @@ public class CarServiceCenterEdit extends AbstractEditor<CarServiceCenter> {
         updateSizeOfCustomersInTabCaption();
 
         customersTable.addGeneratedColumn("type", this::generateType);
+    }
+
+    /**
+     * Primary for side-effect
+     */
+    private void checkPermissionsOnActionsRepairsTable(MetaClass metaClass) {
+        if (!security.isEntityAttrUpdatePermitted(metaClass, "repairs")) {
+            repairsTableCreate.setEnabled(false);
+            repairsTableRemove.setEnabled(false);
+        }
+    }
+
+    /**
+     * Primary for side-effect
+     */
+    private void checkPermissionsOnActionsCustomersTable(MetaClass metaClass) {
+        if (!security.isEntityAttrUpdatePermitted(metaClass, "employees")) {
+            customersTableAdd.setEnabled(false);
+            customersTableRemove.setEnabled(false);
+        }
+    }
+
+    /**
+     * Primary for side-effect
+     */
+    private void checkPermissionsOnActionsEmployeesTable(MetaClass metaClass) {
+        if (!security.isEntityAttrUpdatePermitted(metaClass, "employees")) {
+            employeesTableCreate.setEnabled(false);
+            employeesTableRemove.setEnabled(false);
+        }
     }
 
     private Component generateType(Customer customer) {
@@ -85,6 +152,7 @@ public class CarServiceCenterEdit extends AbstractEditor<CarServiceCenter> {
 
     @Override
     protected void initNewItem(CarServiceCenter item) {
+        item.setOwner(userSession.getUser());
         item.setCity(cityService.getDefaultCity());
     }
 

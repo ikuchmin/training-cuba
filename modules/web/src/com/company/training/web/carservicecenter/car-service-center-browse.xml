@@ -36,6 +36,7 @@
                 <column id="address"/>
                 <column id="city"
                         caption="msg://city"/>
+                <column id="owner"/>
             </columns>
             <rows datasource="carServiceCentersDs"/>
             <rowsCount/>
